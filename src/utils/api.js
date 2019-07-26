@@ -2,7 +2,7 @@
 import wepy from 'wepy'
 // 服务器接口地址
 const host = 'http://larabbs.io/api'
-// 普通请求,如果方法中使用了 await 那么方法前必须增加 async 关键字。
+// 普通请求 如果方法中使用了 await 那么方法前必须增加 async 关键字。
 const request = async (options, showLoading = true) => {
   // 简化开发，如果传入字符串则转换成 对象
   if (typeof options === 'string') {
@@ -16,7 +16,7 @@ const request = async (options, showLoading = true) => {
   }
   // 拼接请求地址
   options.url = host + '/' + options.url
-  // 调用小程序的 request 方法
+  // 调用小程序的 request 方法(默认为get请求)
   let response = await wepy.request(options)
   if (showLoading) {
     // 隐藏加载中
