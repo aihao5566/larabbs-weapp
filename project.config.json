@@ -7,7 +7,8 @@
 		"minified": false,
 		"newFeature": true,
 		"autoAudits": false,
-		"checkInvalidKey": true
+		"checkInvalidKey": true,
+		"checkSiteMap": false
 	},
 	"compileType": "miniprogram",
 	"appid": "wx743139e73da95e81",

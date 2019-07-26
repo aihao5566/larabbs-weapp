@@ -140,6 +140,11 @@ export default class TopicIndex extends wepy.page {
     await this.$invoke('topiclist', 'reload')
     wepy.stopPullDownRefresh()
   }
+  onShow () {
+    this.$parent.checkRefreshPages(this.getCurrentPages().pop().route, () => {
+      this.$invoke('topiclist', 'reload')
+    })
+  }
   onReachBottom () {
     // 调用组件的 loadMore 方法
     this.$invoke('topiclist', 'loadMore')
