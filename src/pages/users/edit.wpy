@@ -162,6 +162,7 @@ export default class UserEdit extends wepy.page {
       })
     }
   }
+  // 页面方法写在这里
   methods = {
     async updateAvatar () {
       // 选择头像图片 从本地相册选择图片或使用相机拍照
