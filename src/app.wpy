@@ -57,7 +57,8 @@ export default class extends wepy.app {
       'pages/auth/register',
       'pages/replies/index',
       'pages/replies/userIndex',
-      'pages/replies/create'
+      'pages/replies/create',
+      'pages/notifications/index'
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -88,7 +89,8 @@ export default class extends wepy.app {
   // 全局变量
   globalData = {
     // 需要刷新的页面，可以在页面的 onShow 方法中通过 this.$parent.globalData.refreshPages 获取或设置全局数据。
-    refreshPages: []
+    refreshPages: [],
+    unreadCount: 0
   }
 
   // 用来删除文章时,返回后文章还是存在的问题
@@ -110,24 +112,44 @@ export default class extends wepy.app {
     this.use('promisify')
   }
 
-  onLaunch () {
-    // 原生小程序开发
-    //  wx.login({
-    //  success: function(res) {
-    //  console.log(res)
-    //  }
-    //  });
-    // 获取token
-    wepy.login().then(res => {
-      console.log('login: ', res)
-    })
-  }
+  // onLaunch () {
+  //   // 原生小程序开发
+  //   //  wx.login({
+  //   //  success: function(res) {
+  //   //  console.log(res)
+  //   //  }
+  //   //  });
+  //   // 获取token
+  //   wepy.login().then(res => {
+  //     console.log('login: ', res)
+  //   })
+  // }
 
   // async onLaunch () {
   //   // WePY 中使用 Await
   //   let res = await wepy.login()
   // }
-
+  onLaunch () {
+    // 小程序启动，调用一起获取未读消息数
+    this.updateUnreadCount()
+    // 每隔 60 秒，调用一起获取未读消息数
+    setInterval(() => {
+      this.updateUnreadCount()
+    }, 60000)
+  }
+  // 获取未读消息数
+  async updateUnreadCount () {
+    // 未登录不需要请求
+    if (!this.checkLogin()) {
+      return
+    }
+    // 请求消息统计接口
+    let notificationResponse = await api.authRequest('user/notifications/stats', false)
+    // 请求成功，赋值全局变量 unreadCount
+    if (notificationResponse.statusCode === 200) {
+      this.globalData.unreadCount = notificationResponse.data.unread_count
+    }
+  }
   // 获取当前登录用户信息
   async getCurrentUser () {
     // 如果用户未登录

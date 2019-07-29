@@ -13,7 +13,7 @@
       <view class="weui-panel weui-panel_access">
         <view class="weui-panel__bd">
           <repeat for="{{ replies }}"
-                  key="id"
+                  wx:key="id"
                   index="index"
                   item="reply">
             <view class="weui-media-box weui-media-box_appmsg"

@@ -8,7 +8,13 @@
 		"newFeature": true,
 		"autoAudits": false,
 		"checkInvalidKey": true,
-		"checkSiteMap": false
+		"checkSiteMap": false,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		}
 	},
 	"compileType": "miniprogram",
 	"appid": "wx743139e73da95e81",

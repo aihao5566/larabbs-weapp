@@ -15,15 +15,15 @@
                         placeholder="请输入评论内容"
                         name="content" />
               </view>
-</view>
-</view>
-</view>
-<view class="weui-btn-area">
-<button class="weui-btn" type="primary" formType="submit">提交</button>
-</view>
-</form>
-</view>
-</view>
+            </view>
+            </view>
+            </view>
+            <view class="weui-btn-area">
+            <button class="weui-btn" type="primary" formType="submit">提交</button>
+            </view>
+            </form>
+            </view>
+            </view>
 </template>
 <script>
 import wepy from 'wepy'

@@ -162,7 +162,6 @@ export default class TopicShow extends wepy.page {
         topic.topReplies.data.forEach(function (reply) {
           reply.created_at_diff = util.diffForHumans(reply.created_at)
         })
-
         this.topic = topic
         this.$apply()
       }

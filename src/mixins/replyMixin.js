@@ -10,7 +10,7 @@ export default class ReplyMixin extends wepy.mixin {
     replies: [],
     // 是否有更多数据
     noMoreData: false,
-    // 是否在加载中
+    // 是否在加载中(标志位,防止不停的下拉)
     isLoading: false,
     // 当前页数
     page: 1
