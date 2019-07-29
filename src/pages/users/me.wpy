@@ -66,7 +66,8 @@
         </navigator>
 
         <navigator class="weui-cell weui-cell_access"
-                   url="">
+                   url="/pages/topics/userIndex?user_id={{userInfo.id}}"
+                   open-type="redirect">
           <view class="weui-cell__bd"
                 url="">
             <view class="weui-cell__bd">我的回复</view>
