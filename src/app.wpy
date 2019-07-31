@@ -111,24 +111,25 @@ export default class extends wepy.app {
     // ES6 中的Promise
     this.use('promisify')
   }
+  /*
+  onLaunch () {
+    // 原生小程序开发
+    //  wx.login({
+    //  success: function(res) {
+    //  console.log(res)
+    //  }
+    //  });
+    // 获取token
+    wepy.login().then(res => {
+      console.log('login: ', res)
+    })
+  }
 
-  // onLaunch () {
-  //   // 原生小程序开发
-  //   //  wx.login({
-  //   //  success: function(res) {
-  //   //  console.log(res)
-  //   //  }
-  //   //  });
-  //   // 获取token
-  //   wepy.login().then(res => {
-  //     console.log('login: ', res)
-  //   })
-  // }
-
-  // async onLaunch () {
-  //   // WePY 中使用 Await
-  //   let res = await wepy.login()
-  // }
+  async onLaunch () {
+    // WePY 中使用 Await
+    let res = await wepy.login()
+  }
+  */
   onLaunch () {
     // 小程序启动，调用一起获取未读消息数
     this.updateUnreadCount()
@@ -136,6 +137,8 @@ export default class extends wepy.app {
     setInterval(() => {
       this.updateUnreadCount()
     }, 60000)
+    // 获取用户权限
+    this.getPerms()
   }
   // 获取未读消息数
   async updateUnreadCount () {
@@ -180,6 +183,43 @@ export default class extends wepy.app {
   // 用户是否已经登录
   checkLogin () {
     return (wepy.getStorageSync('access_token') !== '')
+  }
+
+  // 获取权限
+  async getPerms () {
+    let perms = []
+    if (!this.checkLogin()) {
+      return perms
+    }
+    try {
+      let permsResponse = await api.authRequest('user/permissions', false)
+      // 请求成功，放入 storage 缓存中
+      if (permsResponse.statusCode === 200) {
+        perms = permsResponse.data.data
+        wepy.setStorageSync('perms', perms)
+      }
+    } catch (err) {
+      console.log(err)
+      wepy.showModal({
+        title: '提示',
+        content: '获取用户权限失败，可尝试重启小程序'
+      })
+    }
+    return perms
+  }
+
+  // 判断用户权限
+  can (targetPerm) {
+    if (!this.checkLogin()) {
+      return false
+    }
+    // 获取缓存中的权限
+    let perms = wepy.getStorageSync('perms') || []
+    // 判断权限中是否有目标权限
+    if (perms.find(perm => perm.name === targetPerm)) {
+      return true
+    }
+    return false
   }
 
   sleep (s) {

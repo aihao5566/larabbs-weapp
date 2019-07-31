@@ -316,6 +316,8 @@ export default class Login extends wepy.page {
 
         // 记录 key 和 过期时间
         if (codeResponse.statusCode === 201) {
+          // 获取用户权限
+          this.$parent.getPerms()
           this.verificationCode = {
             key: codeResponse.data.key,
             expiredAt: Date.parse(codeResponse.data.expired_at)
